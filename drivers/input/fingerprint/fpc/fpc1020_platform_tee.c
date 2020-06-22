@@ -202,7 +202,6 @@ static int select_pin_ctl(struct fpc1020_data *fpc1020, const char *name)
 	}
 
 	rc = -EINVAL;
-	dev_err(dev, "%s:'%s' not found\n", __func__, name);
 
 exit:
 	return rc;
@@ -422,10 +421,6 @@ static ssize_t irq_ack(struct device *dev,
 	struct device_attribute *attr,
 	const char *buf, size_t count)
 {
-	struct fpc1020_data *fpc1020 = dev_get_drvdata(dev);
-
-	dev_dbg(fpc1020->dev, "%s\n", __func__);
-
 	return count;
 }
 static DEVICE_ATTR(irq, S_IRUSR | S_IWUSR, irq_get, irq_ack);
@@ -437,7 +432,6 @@ static ssize_t fingerdown_wait_set(struct device *dev,
 {
 	struct fpc1020_data *fpc1020 = dev_get_drvdata(dev);
 
-	dev_err(fpc1020->dev, "%s\n", __func__);
 	if (!strncmp(buf, "enable", strlen("enable")))
 		fpc1020->wait_finger_down = true;
 	else if (!strncmp(buf, "disable", strlen("disable")))
@@ -580,7 +574,6 @@ static irqreturn_t fpc1020_irq_handler(int irq, void *handle)
 {
 	struct fpc1020_data *fpc1020 = handle;
 
-	dev_err(fpc1020->dev, "%s\n", __func__);
 
 
 	if (atomic_read(&fpc1020->wakeup_enabled)) {
@@ -591,7 +584,6 @@ static irqreturn_t fpc1020_irq_handler(int irq, void *handle)
 
 	sysfs_notify(&fpc1020->dev->kobj, NULL, dev_attr_irq.attr.name);
 		if (fpc1020->wait_finger_down && fpc1020->fb_black) {
-		printk("%s enter\n", __func__);
 		fpc1020->wait_finger_down = false;
 		schedule_work(&fpc1020->work);
 	}
@@ -638,7 +630,6 @@ static int fpc_fb_notif_callback(struct notifier_block *nb,
 	if (val != FB_EVENT_BLANK)
 		return 0;
 
-	printk("[info] %s value = %d\n", __func__, (int)val);
 
 	if (evdata && evdata->data && val == FB_EVENT_BLANK) {
 		blank = *(int *)(evdata->data);
@@ -650,7 +641,6 @@ static int fpc_fb_notif_callback(struct notifier_block *nb,
 			fpc1020->fb_black = false;
 			break;
 		default:
-			printk("%s defalut\n", __func__);
 			break;
 		}
 	}
@@ -703,8 +693,6 @@ static int fpc1020_probe(struct platform_device *pdev)
 
 
 
-
-	dev_err(dev, "%s: ok\n", __func__);
 	fpc1020->fb_black = false;
 	fpc1020->wait_finger_down = false;
 	INIT_WORK(&fpc1020->work, notification_work);
@@ -730,7 +718,6 @@ static int fpc1020_remove(struct platform_device *pdev)
 	(void)vreg_setup(fpc1020, "vdd_ana", false);
 	(void)vreg_setup(fpc1020, "vdd_io", false);
 	(void)vreg_setup(fpc1020, "vcc_spi", false);
-	dev_info(&pdev->dev, "%s\n", __func__);
 
 	return 0;
 }
@@ -755,17 +742,11 @@ static int __init fpc1020_init(void)
 {
 	int rc = platform_driver_register(&fpc1020_driver);
 
-	if (!rc)
-		pr_info("%s OK\n", __func__);
-	else
-		pr_err("%s %d\n", __func__, rc);
-
 	return rc;
 }
 
 static void __exit fpc1020_exit(void)
 {
-	pr_info("%s\n", __func__);
 	platform_driver_unregister(&fpc1020_driver);
 }
 
