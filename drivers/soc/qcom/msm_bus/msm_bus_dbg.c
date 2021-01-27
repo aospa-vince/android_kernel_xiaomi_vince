@@ -856,6 +856,10 @@ EXPORT_SYMBOL(msm_bus_dbg_commit_data);
 
 static int __init msm_bus_debugfs_init(void)
 {
+#ifdef CONFIG_D1_ROSY
+	msm_bus_dbg_init_vectors();
+	return 0;
+#else
 	struct dentry *commit, *shell_client, *rules_dbg;
 	struct msm_bus_fab_list *fablist;
 	struct msm_bus_cldata *cldata = NULL;
@@ -964,6 +968,7 @@ static int __init msm_bus_debugfs_init(void)
 err:
 	debugfs_remove_recursive(dir);
 	return -ENODEV;
+#endif
 }
 late_initcall(msm_bus_debugfs_init);
 
