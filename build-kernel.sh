@@ -28,10 +28,6 @@ if [[ -z ${TELEGRAM_TOKEN} ]]; then
     TELEGRAM_TOKEN="${tg_token}"
 fi
 
-if [[ -z ${UNITRIX_CHANNEL_ID} ]]; then
-    UNITRIX_CHANNEL_ID=$CHANNEL_ID
-fi
-
 # Upload buildlog to group
 tg_erlog()
 {
@@ -46,7 +42,7 @@ tg_pushzip()
 {
 	FZIP=$ZIP_DIR/$ZIP
 	curl -F document=@"$FZIP"  "https://api.telegram.org/bot$TELEGRAM_TOKEN/sendDocument" \
-		   -F chat_id=$UNITRIX_CHANNEL_ID
+		   -F chat_id=$CHANNEL_ID
 }
 
 # Send Updates
@@ -72,7 +68,7 @@ function error_sticker() {
 }
 function clone_tc() {
 [ -d ${TC_PATH} ] || mkdir ${TC_PATH}
-git clone -b release/15.x --depth=1 https://gitlab.com/GhostMaster69-dev/cosmic-clang.git ${TC_PATH}
+git clone -b 17 --depth=1 https://gitlab.com/anandhan07/aosp-clang.git ${TC_PATH}
 PATH="${TC_PATH}/bin:$PATH"
 export COMPILER=$(${TC_PATH}/bin/clang -v 2>&1 | grep ' version ' | sed 's/([^)]*)[[:space:]]//' | sed 's/([^)]*)//')
 }
