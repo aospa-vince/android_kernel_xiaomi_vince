@@ -10,7 +10,7 @@ export TC_PATH="$HOME/clang"
 export ZIP_DIR="$(pwd)/Flasher"
 export KERNEL_DIR=$(pwd)
 export KBUILD_BUILD_VERSION="1"
-export KBUILD_BUILD_USER="Unitrix-Kernel"
+export KBUILD_BUILD_USER="Cygnus-Kernel"
 export KBUILD_BUILD_HOST="Cosmic-Horizon"
 export KBUILD_BUILD_TIMESTAMP="$(TZ='Asia/Kolkata' date)"
 
