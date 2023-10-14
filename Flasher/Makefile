@@ -5,7 +5,7 @@ VERSION := $(shell cat ../Makefile | grep VERSION | head -n 1 | sed "s|.*=||1" |
 PATCHLEVEL := $(shell cat ../Makefile | grep PATCHLEVEL | head -n 1 | sed "s|.*=||1" | sed "s| ||g")
 SUBLEVEL := $(shell cat ../Makefile | grep SUBLEVEL | head -n 1 | sed "s|.*=||1" | sed "s| ||g")
 
-SZIP := $(NAME)-$(VERSION).$(PATCHLEVEL).$(SUBLEVEL)-STABLE-$(DATE).zip
+SZIP := $(NAME)-$(VERSION).$(PATCHLEVEL).$(SUBLEVEL)-v1.0-STABLE-$(DATE).zip
 BZIP := $(NAME)-$(VERSION).$(PATCHLEVEL).$(SUBLEVEL)-BETA-$(DATE).zip
 TZIP := $(NAME)-$(VERSION).$(PATCHLEVEL).$(SUBLEVEL)-TEST-$(DATE).zip
 
